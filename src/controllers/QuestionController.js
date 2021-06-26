@@ -68,11 +68,8 @@ module.exports = {
                 0,
                 ${new Date().getTime()}
             )`)
-    
-            const questions = await db.all(`SELECT * FROM questions WHERE read = 0 AND room = '${roomId}' ORDER BY id DESC`);
-            const questionsRead = await db.all(`SELECT * FROM questions WHERE read = 1 AND room = '${roomId}' ORDER BY id DESC`);
-
-            res.json({success: true, message: 'Pergunta registrada! Esperamos que seja respondida logo =)', questions, questionsRead});
+            
+                res.json({success: true, message: 'Pergunta registrada! Esperamos que seja respondida logo =)'});
             
         } catch (error) {
             console.log(error);
