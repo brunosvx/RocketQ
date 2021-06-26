@@ -59,19 +59,36 @@ module.exports = {
     },
 
     async open(req, res){
-        const db = await Database();
-        const roomId = req.params.room;
-        const questions = await db.all(`SELECT * FROM questions WHERE room = ${roomId} and read = 0`);
-        const questionsRead = await db.all(`SELECT * FROM questions WHERE room = ${roomId} and read = 1`);
-        let isNoQuestions;
+        try {
+            const roomId = parseInt(req.params.room);
+            const db = await Database();
 
-        if(questions.length ==0){
-            if(questionsRead.length == 0){
-                isNoQuestions = true;
+            /* Verifica se a sala existe */
+
+            const room = await db.all(`SELECT * FROM rooms WHERE id = ${roomId}`);
+
+            if(!room.length){
+                return res.render('index', { page:'no-room' })
             }
-        }
 
-        res.render("room", {roomId: roomId, questions: questions, questionsRead: questionsRead, isNoQuestions: isNoQuestions});
+            /* Se a sala existir */
+
+            const questions = await db.all(`SELECT * FROM questions WHERE room = ${roomId} and read = 0`);
+            const questionsRead = await db.all(`SELECT * FROM questions WHERE room = ${roomId} and read = 1`);
+            let isNoQuestions;
+    
+            if(!questions.length){
+                if(!questionsRead.length){
+                    isNoQuestions = true;
+                }
+            }
+    
+            res.render("room", {roomId, questions, questionsRead, isNoQuestions});
+            
+        } catch (error) {
+            console.log(error);
+            res.json({ sucess:false, message: 'Ocorreu um erro interno carregar a sala :(' });
+        }
     },
 
     async enter(req, res){
