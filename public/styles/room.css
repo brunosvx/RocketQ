@@ -100,10 +100,13 @@
     padding: 2.4rem;
 }
 
-span.hour {
+span.hour, span.counter {
     margin-right: 15px;
     font-size: 14px;
     color: gray;
+}
+
+span.hour{
     border-bottom: 0.1px solid #3485FF;
 }
 

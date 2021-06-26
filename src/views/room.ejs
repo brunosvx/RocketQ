@@ -38,12 +38,13 @@
                     <form id="askForm" room-id="<%= roomId %>">
                         <label class="sr-only" for-id="question">O que você quer perguntar?</label>
                         <textarea name="question" id="question" placeholder="O que você quer perguntar?"></textarea>
-
+                        <span class="counter">0/500</span>
                         <footer>
                             <div>
                                 <img src="/images/lock.svg" alt="Cadeado">
                                 Esta pergunta é anônima
                             </div>
+                            
                             <button>Enviar</button>
                         </footer>
                     </form>
@@ -68,7 +69,7 @@
                                     </div>
                                 </div>
                                 <div class="actions">
-                                    <span class="hour"><%= new Date(question.data).toLocaleString('pt-BR',{day: '2-digit', month: '2-digit',year: '2-digit' , hour: '2-digit', minute:'2-digit'}) %></span>
+                                    <span class="hour"><%= new Date(question.data).toLocaleString('pt-BR',{day: '2-digit', month: '2-digit',year: '2-digit' , hour: '2-digit', minute:'2-digit'}).replace(' ',' - ') %></span>
                                     <a href="#" class="check" data-id="<%= question.id %>">
                                         <img src="/images/check.svg" alt="Marcar como lida">
                                         Marcar como lida

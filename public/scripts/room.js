@@ -53,3 +53,17 @@ actionForm.onsubmit = async (e) => {
     modalResponseText.innerHTML = data.message;
     
 }
+
+const spanCounter = document.querySelector('span.counter');
+
+const type = () => {
+    if(question.value.length >= 500){
+        spanCounter.style.color = '#E83F5B';
+        question.value = question.value.substr(0, 500);
+        return spanCounter.innerHTML = `${question.value.length}/500`;
+    }
+    spanCounter.style.color = 'gray';
+    spanCounter.innerHTML = `${question.value.length}/500`;
+}
+
+question.addEventListener('input', type)
