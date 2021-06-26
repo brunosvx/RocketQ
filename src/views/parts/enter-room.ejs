@@ -1,8 +1,8 @@
 <section>
     <h2>Entre como participante</h2>
-    <form action="/enterroom" method="POST">
+    <form id="enterRoomForm">
         <label class="sr-only" for="room-id">Código da sala</label>
-        <input name="roomId" type="number" id="room-id" placeholder="Código da sala">
+        <input name="roomId" type="number" id="room-id" placeholder="Código da sala" required>
         <button>
             <img src="images/enter-room.svg" alt="Entrar na sala">
             Entrar na sala
@@ -15,7 +15,16 @@
     <div>ou</div>
     <div></div>
 </div>
+<div class="modal-wrapper">
+    <div class="modal">
+        <h1 id="modalMessage"></h1>
+        <br>
+        <div class="buttons">
+            <div class="button cancel" id="modalButton">Fechar</div>
+        </div>
 
+    </div>
+</div>
 <section>
      <h2>Crie sua própria sala de forma fácil</h2>
      <a href="/create-pass" class="button outlined">
@@ -23,3 +32,4 @@
         Criar Sala                      
      </a>
 </section>
+<script src="/scripts/enterRoom.js" defer type="module"></script>

@@ -15,7 +15,7 @@ module.exports = {
                 return res.json({success:false, message:'Sua senha precisa ser menor que 50 caracteres'});  
             }
 
-            const db = await Database()
+            const db = await Database();
             let roomId = ''
             let isRoom = true
 
@@ -48,35 +48,53 @@ module.exports = {
                 }
             }         
 
-            await db.close()
+            await db.close();
 
-            res.redirect(`/room/${roomId}`) 
+            res.redirect(`/room/${roomId}`) ;
             
         } catch (error) {
             console.log(error);
-            res.json({ sucess:false, message: 'Ocorreu um erro interno ao criar a sala =(' })
+            res.json({ sucess:false, message: 'Ocorreu um erro interno ao criar a sala =(' });
         }
     },
 
     async open(req, res){
-        const db = await Database()
-        const roomId = req.params.room
-        const questions = await db.all(`SELECT * FROM questions WHERE room = ${roomId} and read = 0`)
-        const questionsRead = await db.all(`SELECT * FROM questions WHERE room = ${roomId} and read = 1`)
-        let isNoQuestions
+        const db = await Database();
+        const roomId = req.params.room;
+        const questions = await db.all(`SELECT * FROM questions WHERE room = ${roomId} and read = 0`);
+        const questionsRead = await db.all(`SELECT * FROM questions WHERE room = ${roomId} and read = 1`);
+        let isNoQuestions;
 
         if(questions.length ==0){
             if(questionsRead.length == 0){
-                isNoQuestions = true
+                isNoQuestions = true;
             }
         }
 
-        res.render("room", {roomId: roomId, questions: questions, questionsRead: questionsRead, isNoQuestions: isNoQuestions})
+        res.render("room", {roomId: roomId, questions: questions, questionsRead: questionsRead, isNoQuestions: isNoQuestions});
     },
 
-    enter(req, res){
-        const { roomId } = req.body
+    async enter(req, res){
+        try {
+            const { roomId } = req.body;
+    
+            if(!String(roomId).trim().length){
+                return res.json({success:false, message:'Você precisa inserir uma sala.'});   
+            }
 
-        res.redirect(`/room/${roomId}`)
+            const db = await Database();
+
+            const rooms = await db.all(`SELECT id FROM rooms WHERE id = ${parseInt(roomId)}`)
+
+            if(!rooms.length){
+                return res.json({ sucess:false, message: 'Essa sala não existe' });
+            }
+            
+            res.redirect(`/room/${roomId}`);
+            
+        } catch (error) {
+            console.log(error);
+            res.json({ sucess:false, message: 'Ocorreu um erro interno ao entrar na sala =(' });
+        }
     }
 }
