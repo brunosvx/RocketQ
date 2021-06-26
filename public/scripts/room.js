@@ -20,3 +20,30 @@ askForm.onsubmit = async (e) => {
 
     Response('error', data.message);
 }
+
+const actionForm = document.querySelector('#formAction');
+const password = document.querySelector('#password');
+const modalResponseText = document.querySelector('#modalResponseText');
+modalResponseText.style.color = '#E83F5B';
+
+actionForm.onsubmit = async (e) => {
+    e.preventDefault();
+
+    if(!password.value.trim().length){
+        return modalResponseText.innerHTML = 'Você precisa botar sua senha';
+    }
+
+    const { data } = await axios.post(actionForm.getAttribute('action'), {
+        password: password.value.trim()
+    })
+
+    if(data.success){
+        document.querySelector('.rkt.button.cancel').click();
+
+        return document.getElementById(data.questionId).remove();
+    }
+    
+    password.value = '';
+    modalResponseText.innerHTML = data.message;
+    
+}

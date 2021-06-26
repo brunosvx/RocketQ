@@ -9,6 +9,7 @@ export default function Modal(){
         modalWrapper.classList.add("active")
     }
     function close(){
+        document.querySelector('#modalResponseText').innerHTML = '';
         modalWrapper.classList.remove("active")
     }
 

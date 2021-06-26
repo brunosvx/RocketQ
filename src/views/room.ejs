@@ -58,7 +58,7 @@
                         <% } %>
                         
                         <% questions.forEach(question => { %>                            
-                            <div class="question-wrapper">
+                            <div class="question-wrapper" id="<%= question.id %>">
                                 <div class="question-content">
                                     <div class="user">
                                         <img src="/images/user.svg" alt="Avatar">
@@ -82,7 +82,7 @@
                         <% });  %>
 
                         <% questionsRead.forEach(questionRead => { %>
-                            <div class="question-wrapper read">
+                            <div class="question-wrapper read" id="<%= questionRead.id %>">
                                 <div class="question-content">
                                     <div class="user">
                                         <img src="/images/user.svg" alt="Avatar">
@@ -122,10 +122,10 @@
                 <h2>Excluir Pergunta</h2>
                 <p>Tem certeza que você deseja excluir esta pergunta?</p>
 
-                <form action="#" method="POST">
+                <form action="#" id="formAction">
                     <label class="sr-only" for-id="password">Digite sua senha admin</label>
                     <input type="password" id="password" name="password" placeholder="Digite sua senha" />
-
+                    <p id="modalResponseText"></p>
                     <div class="buttons">
                         <div class="rkt button grey cancel">Cancelar</div>
                         <button class="red">Sim, excluir</button>

@@ -2,13 +2,21 @@ const Database = require('../db/config')
 
 module.exports = {
     async index(req, res){
-        const db = await Database();
-        const { roomId, questionId, action } = req.params
-        const { password } = req.body
+        try {
+            const db = await Database();
+            const { roomId, questionId, action } = req.params
+            const { password } = req.body
+    
+            if(!password.trim().length){
+                return res.json({ success: false, message: 'Você precisa botar sua senha' });
+            }
 
+            const verifyRoom = await db.get(`SELECT * FROM rooms WHERE id = ${roomId} AND pass = ${password}`);
 
-        const verifyRoom = await db.get(`SELECT * FROM rooms WHERE id = ${roomId}`);
-        if(verifyRoom.pass == password){
+            if(!verifyRoom){
+                return res.json({ success: false, message: 'Senha incorreta' });
+            }
+
             if(action == "delete"){
 
                 await db.run(`DELETE FROM questions WHERE id = ${questionId}`);
@@ -18,9 +26,13 @@ module.exports = {
                 await db.run(`UPDATE questions SET read = 1 WHERE id = ${questionId}`);
 
             }
-            res.redirect(`/room/${roomId}`);
-        } else{
-            res.render('passincorrect', {roomId: roomId});
+
+            res.json({ success: true, questionId });
+
+            
+        } catch (error) {
+            console.log(error);
+            res.json({ success:false, message: 'Ocorreu um erro interno ao completar essa ação =(' });
         }
 
 
