@@ -15,4 +15,4 @@ app.use(route);
 
 app.use((req, res) => res.render('index', {page:'erro404', title: 'Erro404'}));
 
-app.listen(3000, () => console.log("Server running"));
+app.listen(process.env.PORT || 3000, () => console.log("Server running"));
