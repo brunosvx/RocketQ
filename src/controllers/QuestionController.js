@@ -44,6 +44,10 @@ module.exports = {
             const { question } = req.body
             const roomId = parseInt(req.params.room);
 
+            if(question.trim().length >= 500){
+                return res.json({ success: false, message: 'Sua pergunta deve conter menos que 500 caracteres' });
+            }
+
             const room = await db.all(`SELECT * FROM rooms WHERE id = ${roomId}`);
 
             if(!room.length){
