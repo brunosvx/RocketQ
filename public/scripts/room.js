@@ -1,5 +1,58 @@
 import Response from './responseModal.js';
 
+const divQuestions = document.querySelector('#divQuestions');
+
+const renderQuestions = (questions, questionsRead) => {
+
+    divQuestions.innerHTML = '';
+    
+    questions.forEach(question => {
+        divQuestions.innerHTML += `<div class="question-wrapper" id="${question.id}">
+        <div class="question-content">
+            <div class="user">
+                <img src="/images/user.svg" alt="Avatar">
+            </div>
+            <div class="question">
+                <p>${question.title}</p>
+            </div>
+        </div>
+        <div class="actions">
+            <span class="hour">${ new Date(question.data).toLocaleString('pt-BR',{day: '2-digit', month: '2-digit',year: '2-digit' , hour: '2-digit', minute:'2-digit'}).replace(' ',' - ') }</span>
+            <a href="#" class="check" data-id="${question.id}">
+                <img src="/images/check.svg" alt="Marcar como lida">
+                Marcar como lida
+            </a>
+            <a href="#" class="delete" data-id="${question.id}">
+                <img src="/images/trash.svg" alt="Excluir">
+                Excluir
+            </a>
+        </div>
+    </div>`
+    });
+
+    questionsRead.forEach(question => {
+        divQuestions.innerHTML += `<div class="question-wrapper read" id="${question.id}">
+        <div class="question-content">
+            <div class="user">
+                <img src="/images/user.svg" alt="Avatar">
+            </div>
+            <div class="question">
+                <p>${question.title}</p>
+            </div>
+        </div>
+        <div class="actions">
+            <span class="hour">${ new Date(question.data).toLocaleString('pt-BR',{day: '2-digit', month: '2-digit',year: '2-digit' , hour: '2-digit', minute:'2-digit'}).replace(' ',' - ') }</span>
+            <a href="#" class="delete" data-id="${question.id}">
+                <img src="/images/trash.svg" alt="Excluir">
+                Excluir
+            </a>
+        </div>
+    </div>`
+    })
+
+}
+
+
 const askForm = document.querySelector('#askForm');
 const question = document.querySelector('#question');
 
@@ -15,7 +68,8 @@ askForm.onsubmit = async (e) => {
     })
 
     if(data.success){
-        return Response('success', data.message);
+        Response('success', data.message);
+        return renderQuestions(data.questions, data.questionsRead);
     }
 
     Response('error', data.message);

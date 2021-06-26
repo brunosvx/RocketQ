@@ -47,6 +47,9 @@ module.exports = {
             if(question.trim().length >= 500){
                 return res.json({ success: false, message: 'Sua pergunta deve conter menos que 500 caracteres' });
             }
+            if(question.trim().length < 5){
+                return res.json({success:false, message:'Sua pergunta deve ter mais que 5 caracteres'});
+            }
 
             const room = await db.all(`SELECT * FROM rooms WHERE id = ${roomId}`);
 
@@ -66,7 +69,10 @@ module.exports = {
                 ${new Date().getTime()}
             )`)
     
-            res.json({success: true, message: 'Pergunta registrada! Esperamos que seja respondida logo =)'});
+            const questions = await db.all(`SELECT * FROM questions WHERE read = 0 AND room = ${roomId} ORDER BY id DESC`);
+            const questionsRead = await db.all(`SELECT * FROM questions WHERE read = 1 AND room = ${roomId} ORDER BY id DESC`);
+
+            res.json({success: true, message: 'Pergunta registrada! Esperamos que seja respondida logo =)', questions, questionsRead});
             
         } catch (error) {
             console.log(error);

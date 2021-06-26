@@ -73,8 +73,8 @@ module.exports = {
 
             /* Se a sala existir */
 
-            const questions = await db.all(`SELECT * FROM questions WHERE room = ${roomId} and read = 0`);
-            const questionsRead = await db.all(`SELECT * FROM questions WHERE room = ${roomId} and read = 1`);
+            const questions = await db.all(`SELECT * FROM questions WHERE room = ${roomId} and read = 0 ORDER BY id DESC`);
+            const questionsRead = await db.all(`SELECT * FROM questions WHERE room = ${roomId} and read = 1 ORDER BY id DESC`);
             let isNoQuestions;
     
             if(!questions.length){
