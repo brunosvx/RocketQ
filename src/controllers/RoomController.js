@@ -68,7 +68,7 @@ module.exports = {
             const room = await db.all(`SELECT * FROM rooms WHERE id = '${roomId}'`);
 
             if(!room.length){
-                return res.render('index', { page:'no-room' })
+                return res.render('index', { page:'no-room', title: 'Sala vazia :(' })
             }
 
             /* Se a sala existir */

@@ -54,6 +54,13 @@ body, button, input, textarea{
     border-width: 0;
 }
 
+h2#erro{
+    font-size: 80px;
+}
+
+section.notFound{
+    text-align: center;
+}
 
 /*----- input and buttons ------*/
 input, button, .button{

@@ -13,5 +13,6 @@ app.use(express.urlencoded({extended: true}));
 
 app.use(route);
 
+app.use((req, res) => res.render('index', {page:'erro404', title: 'Erro404'}));
 
 app.listen(3000, () => console.log("Server running"));
