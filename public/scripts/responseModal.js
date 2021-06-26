@@ -23,6 +23,8 @@ export default (type, message) => {
     const modalButton = document.querySelector('#modalButton');
 
     modalMessage.innerHTML = message;
+    modalButton.classList.remove('green');
+    modalButton.classList.remove('red');
     modalButton.classList.add(types[type]);
     
 

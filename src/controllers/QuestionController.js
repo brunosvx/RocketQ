@@ -11,7 +11,7 @@ module.exports = {
                 return res.json({ success: false, message: 'Você precisa botar sua senha' });
             }
 
-            const verifyRoom = await db.get(`SELECT * FROM rooms WHERE id = ${roomId} AND pass = ${password}`);
+            const verifyRoom = await db.get(`SELECT * FROM rooms WHERE id = '${roomId}' AND pass = '${password}'`);
 
             if(!verifyRoom){
                 return res.json({ success: false, message: 'Senha incorreta' });
@@ -19,11 +19,11 @@ module.exports = {
 
             if(action == "delete"){
 
-                await db.run(`DELETE FROM questions WHERE id = ${questionId}`);
+                await db.run(`DELETE FROM questions WHERE id = '${questionId}'`);
 
             }else if(action == "check"){
 
-                await db.run(`UPDATE questions SET read = 1 WHERE id = ${questionId}`);
+                await db.run(`UPDATE questions SET read = 1 WHERE id = '${questionId}'`);
 
             }
 
@@ -51,7 +51,7 @@ module.exports = {
                 return res.json({success:false, message:'Sua pergunta deve ter mais que 5 caracteres'});
             }
 
-            const room = await db.all(`SELECT * FROM rooms WHERE id = ${roomId}`);
+            const room = await db.all(`SELECT * FROM rooms WHERE id = '${roomId}'`);
 
             if(!room.length){
                 return res.json({success: false, message: 'Você está perguntando para uma sala que não existe'});
@@ -63,14 +63,14 @@ module.exports = {
                 read,
                 data
             )VALUES(
-                "${question}",
-                ${roomId},
+                '${question}',
+                '${roomId}',
                 0,
                 ${new Date().getTime()}
             )`)
     
-            const questions = await db.all(`SELECT * FROM questions WHERE read = 0 AND room = ${roomId} ORDER BY id DESC`);
-            const questionsRead = await db.all(`SELECT * FROM questions WHERE read = 1 AND room = ${roomId} ORDER BY id DESC`);
+            const questions = await db.all(`SELECT * FROM questions WHERE read = 0 AND room = '${roomId}' ORDER BY id DESC`);
+            const questionsRead = await db.all(`SELECT * FROM questions WHERE read = 1 AND room = '${roomId}' ORDER BY id DESC`);
 
             res.json({success: true, message: 'Pergunta registrada! Esperamos que seja respondida logo =)', questions, questionsRead});
             

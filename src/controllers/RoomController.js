@@ -32,7 +32,7 @@ module.exports = {
                 roomId = parseInt(roomId);
 
                 /* Verificar se esse numero já existe */
-                const roomsExistIds = await db.all(`SELECT id FROM rooms WHERE id = ${roomId}`);
+                const roomsExistIds = await db.all(`SELECT id FROM rooms WHERE id = '${roomId}'`);
 
                 isRoom = roomsExistIds.length ? true : false
 
@@ -42,8 +42,8 @@ module.exports = {
                         id,
                         pass
                     ) VAlUES (
-                        ${roomId},
-                        "${roomPassword}"
+                        '${roomId}',
+                        '${roomPassword}'
                     )`)
                 }
             }         
@@ -65,7 +65,7 @@ module.exports = {
 
             /* Verifica se a sala existe */
 
-            const room = await db.all(`SELECT * FROM rooms WHERE id = ${roomId}`);
+            const room = await db.all(`SELECT * FROM rooms WHERE id = '${roomId}'`);
 
             if(!room.length){
                 return res.render('index', { page:'no-room' })
@@ -73,8 +73,8 @@ module.exports = {
 
             /* Se a sala existir */
 
-            const questions = await db.all(`SELECT * FROM questions WHERE room = ${roomId} and read = 0 ORDER BY id DESC`);
-            const questionsRead = await db.all(`SELECT * FROM questions WHERE room = ${roomId} and read = 1 ORDER BY id DESC`);
+            const questions = await db.all(`SELECT * FROM questions WHERE room = '${roomId}' and read = 0 ORDER BY id DESC`);
+            const questionsRead = await db.all(`SELECT * FROM questions WHERE room = '${roomId}' and read = 1 ORDER BY id DESC`);
             let isNoQuestions;
     
             if(!questions.length){
@@ -101,7 +101,7 @@ module.exports = {
 
             const db = await Database();
 
-            const rooms = await db.all(`SELECT id FROM rooms WHERE id = ${parseInt(roomId)}`)
+            const rooms = await db.all(`SELECT id FROM rooms WHERE id = '${parseInt(roomId)}'`)
 
             if(!rooms.length){
                 return res.json({ success:false, message: 'Essa sala não existe' });
