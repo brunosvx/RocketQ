@@ -9,6 +9,12 @@ const renderQuestions = (questions, questionsRead) => {
     
     questions.forEach(question => {
         divQuestions.innerHTML += `<div class="question-wrapper" id="${question.id}">
+        <div class="question-date">
+        <div class="question-hour">
+            ${ new Date(question.data).toLocaleString('pt-BR',{day: '2-digit', month: '2-digit',year: '2-digit' , hour: '2-digit', minute:'2-digit'}).replace(' ',' - ') }
+        </div>
+      </div>
+
         <div class="question-content">
             <div class="user">
                 <img src="/images/user.svg" alt="Avatar">
@@ -18,7 +24,6 @@ const renderQuestions = (questions, questionsRead) => {
             </div>
         </div>
         <div class="actions">
-            <span class="hour">${ new Date(question.data).toLocaleString('pt-BR',{day: '2-digit', month: '2-digit',year: '2-digit' , hour: '2-digit', minute:'2-digit'}).replace(' ',' - ') }</span>
             <a href="#" class="check" data-id="${question.id}">
                 <img src="/images/check.svg" alt="Marcar como lida">
                 Marcar como lida
@@ -33,6 +38,11 @@ const renderQuestions = (questions, questionsRead) => {
 
     questionsRead.forEach(question => {
         divQuestions.innerHTML += `<div class="question-wrapper read" id="${question.id}">
+        <div class="question-date">
+                                    <div class="question-hour">
+                                        ${ new Date(question.data).toLocaleString('pt-BR',{day: '2-digit', month: '2-digit',year: '2-digit' , hour: '2-digit', minute:'2-digit'}).replace(' ',' - ') }
+                                    </div>
+                                  </div>
         <div class="question-content">
             <div class="user">
                 <img src="/images/user.svg" alt="Avatar">

@@ -106,6 +106,16 @@ span.hour, span.counter {
     color: gray;
 }
 
+.question-wrapper .question-date {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .question-date .question-hour {
+    font-size: 1.5rem;
+    color: var(--black);
+  }
+
 span.hour{
     border-bottom: 0.1px solid #3485FF;
 }
