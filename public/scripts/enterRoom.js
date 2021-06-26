@@ -1,4 +1,3 @@
-// action="/enterroom" method="POST"
 import Response from './responseModal.js';
 
 const enterRoomForm = document.querySelector('#enterRoomForm');

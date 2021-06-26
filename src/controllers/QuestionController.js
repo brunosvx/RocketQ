@@ -41,14 +41,16 @@ module.exports = {
             await db.run(`INSERT INTO questions(
                 title,
                 room,
-                read
+                read,
+                data
             )VALUES(
                 "${question}",
                 ${roomId},
-                0
+                0,
+                ${new Date().getTime()}
             )`)
     
-            res.json({success: true, message: 'Pergunta registrada! Espero que seja respondida logo =)'});
+            res.json({success: true, message: 'Pergunta registrada! Esperamos que seja respondida logo =)'});
             
         } catch (error) {
             console.log(error);

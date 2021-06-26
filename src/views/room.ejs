@@ -35,7 +35,7 @@
             <main>
                 <section id="question-form">
                     <h2>Faça sua pergunta</h2>
-                    <form id="askForm">
+                    <form id="askForm" room-id="<%= roomId %>">
                         <label class="sr-only" for-id="question">O que você quer perguntar?</label>
                         <textarea name="question" id="question" placeholder="O que você quer perguntar?"></textarea>
 
@@ -92,7 +92,7 @@
                                     </div>
                                 </div>
                                 <div class="actions">
-                                    <span class="hour"><%= new Date(questionRead.data).toLocaleString('pt-BR',{day: '2-digit', month: '2-digit',year: '2-digit' , hour: '2-digit', minute:'2-digit'}) %></span>
+                                    <span class="hour"><%= new Date(questionRead.data).toLocaleString('pt-BR',{day: '2-digit', month: '2-digit',year: '2-digit' , hour: '2-digit', minute:'2-digit'}).replace(' ',' - ') %></span>
                                     <a href="#" class="delete" data-id="<%= questionRead.id %>">
                                         <img src="/images/trash.svg" alt="Excluir">
                                         Excluir
@@ -109,7 +109,7 @@
         </div>
         <div class="modal-wrapper myModal">
             <div class="modal">
-                <h1 id="modalMessage"></h1>
+                <h2 id="modalMessage"></h2>
                 <br>
                 <div class="buttons">
                     <div class="button cancel" id="modalButton">Fechar</div>
