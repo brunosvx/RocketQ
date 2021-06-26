@@ -111,11 +111,19 @@ actionForm.onsubmit = async (e) => {
         document.querySelector('.rkt.button.cancel').click();
         const questionElement = document.getElementById(data.questionId)
         if(data.action === 'delete'){
-            return questionElement.remove();
+            questionElement.remove();
+        }else{
+            questionElement.classList.add('read');
+            questionElement.querySelector('.check').remove();
         }
 
-        questionElement.classList.add('read');
-        return questionElement.querySelector('.check').remove();
+        if(divQuestions.childElementCount) return
+
+        return divQuestions.innerHTML = `<div class="no-questions">
+        <img src="/images/noquestions.svg" alt="Sem perguntas">
+        <p>Nenhuma pergunta por aqui...</p>
+        <p>Faça sua primeira pergunta e envie o <br>código dessa sala para outras pessoas!</p>
+    </div>`;
     }
     
     password.value = '';
