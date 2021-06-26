@@ -35,7 +35,7 @@
             <main>
                 <section id="question-form">
                     <h2>Faça sua pergunta</h2>
-                    <form action="/question/create/<%= roomId %>" method="POST">
+                    <form id="askForm">
                         <label class="sr-only" for-id="question">O que você quer perguntar?</label>
                         <textarea name="question" id="question" placeholder="O que você quer perguntar?"></textarea>
 
@@ -68,6 +68,7 @@
                                     </div>
                                 </div>
                                 <div class="actions">
+                                    <span class="hour"><%= new Date(question.data).toLocaleString('pt-BR',{day: '2-digit', month: '2-digit',year: '2-digit' , hour: '2-digit', minute:'2-digit'}) %></span>
                                     <a href="#" class="check" data-id="<%= question.id %>">
                                         <img src="/images/check.svg" alt="Marcar como lida">
                                         Marcar como lida
@@ -91,6 +92,7 @@
                                     </div>
                                 </div>
                                 <div class="actions">
+                                    <span class="hour"><%= new Date(questionRead.data).toLocaleString('pt-BR',{day: '2-digit', month: '2-digit',year: '2-digit' , hour: '2-digit', minute:'2-digit'}) %></span>
                                     <a href="#" class="delete" data-id="<%= questionRead.id %>">
                                         <img src="/images/trash.svg" alt="Excluir">
                                         Excluir
@@ -105,8 +107,17 @@
             </main>
 
         </div>
-
-        <div class="modal-wrapper">
+        <div class="modal-wrapper myModal">
+            <div class="modal">
+                <h1 id="modalMessage"></h1>
+                <br>
+                <div class="buttons">
+                    <div class="button cancel" id="modalButton">Fechar</div>
+                </div>
+        
+            </div>
+        </div>
+        <div class="modal-wrapper rktmodal">
             <div class="modal">
                 <h2>Excluir Pergunta</h2>
                 <p>Tem certeza que você deseja excluir esta pergunta?</p>
@@ -116,13 +127,13 @@
                     <input type="password" id="password" name="password" placeholder="Digite sua senha" />
 
                     <div class="buttons">
-                        <div class="button grey cancel">Cancelar</div>
+                        <div class="rkt button grey cancel">Cancelar</div>
                         <button class="red">Sim, excluir</button>
                     </div>
                 </form>
 
             </div>
         </div>
-
+        <script src="/scripts/room.js" defer type="module"></script>
     </body>
 </html>

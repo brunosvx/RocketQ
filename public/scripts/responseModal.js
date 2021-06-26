@@ -1,6 +1,17 @@
-import Modal from './modal.js'
+const modalWrapper = document.querySelector('.modal-wrapper.myModal')
+const cancelButton = document.querySelector('.button.cancel')
 
-const modal = Modal();
+cancelButton.addEventListener("click", close)
+
+function open(){
+    modalWrapper.classList.add("active")
+}
+function close(){
+    modalWrapper.classList.remove("active")
+}
+
+   
+
 const types = {
     error: 'red',
     success: 'green' 
@@ -15,6 +26,6 @@ export default (type, message) => {
     modalButton.classList.add(types[type]);
     
 
-    modal.open();
+    open();
 
 }

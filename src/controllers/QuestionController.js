@@ -2,45 +2,57 @@ const Database = require('../db/config')
 
 module.exports = {
     async index(req, res){
-        const db = await Database()
+        const db = await Database();
         const { roomId, questionId, action } = req.params
         const { password } = req.body
 
 
-        const verifyRoom = await db.get(`SELECT * FROM rooms WHERE id = ${roomId}`)
+        const verifyRoom = await db.get(`SELECT * FROM rooms WHERE id = ${roomId}`);
         if(verifyRoom.pass == password){
             if(action == "delete"){
 
-                await db.run(`DELETE FROM questions WHERE id = ${questionId}`)
+                await db.run(`DELETE FROM questions WHERE id = ${questionId}`);
 
             }else if(action == "check"){
 
-                await db.run(`UPDATE questions SET read = 1 WHERE id = ${questionId}`)
+                await db.run(`UPDATE questions SET read = 1 WHERE id = ${questionId}`);
 
             }
-            res.redirect(`/room/${roomId}`)
+            res.redirect(`/room/${roomId}`);
         } else{
-            res.render('passincorrect', {roomId: roomId})
+            res.render('passincorrect', {roomId: roomId});
         }
 
 
     },
 
     async create(req, res){
-        const db = await Database()
-        const { question } = req.body
-        const roomId = req.params.room
+        try {
+            const db = await Database();
+            const { question } = req.body
+            const roomId = parseInt(req.params.room);
 
-        await db.run(`INSERT INTO questions(
-            title,
-            room,
-            read
-        )VALUES(
-            "${question}",
-            ${roomId},
-            0
-        )`)
+            const room = await db.all(`SELECT * FROM rooms WHERE id = ${roomId}`);
 
-        res.redirect(`/room/${roomId}`)
+            if(!room.length){
+                return res.json({success: false, message: 'Você está perguntando para uma sala que não existe'});
+            }
+    
+            await db.run(`INSERT INTO questions(
+                title,
+                room,
+                read
+            )VALUES(
+                "${question}",
+                ${roomId},
+                0
+            )`)
+    
+            res.json({success: true, message: 'Pergunta registrada! Espero que seja respondida logo =)'});
+            
+        } catch (error) {
+            console.log(error);
+            res.json({ success:false, message: 'Ocorreu um erro interno ao fazer sua pergunta :(' });
+        }
     }
 }

@@ -54,7 +54,7 @@ module.exports = {
             
         } catch (error) {
             console.log(error);
-            res.json({ sucess:false, message: 'Ocorreu um erro interno ao criar a sala =(' });
+            res.json({ success:false, message: 'Ocorreu um erro interno ao criar a sala =(' });
         }
     },
 
@@ -87,7 +87,7 @@ module.exports = {
             
         } catch (error) {
             console.log(error);
-            res.json({ sucess:false, message: 'Ocorreu um erro interno carregar a sala :(' });
+            res.json({ success:false, message: 'Ocorreu um erro interno ao carregar a sala :(' });
         }
     },
 
@@ -104,14 +104,14 @@ module.exports = {
             const rooms = await db.all(`SELECT id FROM rooms WHERE id = ${parseInt(roomId)}`)
 
             if(!rooms.length){
-                return res.json({ sucess:false, message: 'Essa sala não existe' });
+                return res.json({ success:false, message: 'Essa sala não existe' });
             }
             
             res.redirect(`/room/${roomId}`);
             
         } catch (error) {
             console.log(error);
-            res.json({ sucess:false, message: 'Ocorreu um erro interno ao entrar na sala =(' });
+            res.json({ success:false, message: 'Ocorreu um erro interno ao entrar na sala =(' });
         }
     }
 }
