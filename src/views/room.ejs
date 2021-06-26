@@ -52,13 +52,29 @@
 
                 <section id="questions">
                     <h2 class="sr-only">Perguntas da comunidade</h2>
+                    <div class="question-filter">
+                        <div class="filter">
+                            <select name="" id="orderSelect">
+                                <option value="default" disabled selected>Ordenar por:</option>
+                                <option value="newest">Mais recente</option>
+                                <option value="oldest">Mais antigo</option>
+                            </select>
+
+                            <select name="" id="filterSelect" >
+                                <option value="all" disabled selected>Filtrar por:</option>
+                                <option value="all">Todos</option>
+                                <option value="read">Lidos</option>
+                                <option value="notRead">Não lidos</option>
+                            </select>
+                        </div>
+                    </div>                      
                     <div class="questions" id="divQuestions">
 
                         <% if (isNoQuestions){ %>
                             <%- include('parts/no-question') %>
                         <% } %>
                         
-                        <% questions.forEach(question => { %>                            
+                        <% questions.forEach(question => { %>
                             <div class="question-wrapper" id="<%= question.id %>">
                                 <div class="question-date">
                                     <div class="question-hour">

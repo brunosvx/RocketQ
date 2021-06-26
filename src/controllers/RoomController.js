@@ -113,5 +113,34 @@ module.exports = {
             console.log(error);
             res.json({ success:false, message: 'Ocorreu um erro interno ao entrar na sala =(' });
         }
+    },
+
+    async filterOrder(req, res){
+        try {
+            
+            const { order, filter, roomId } = req.body;
+            const orders = {
+                'default': 'ORDER BY read ASC, id DESC',
+                'newest': 'ORDER BY id DESC',
+                'oldest': 'ORDER BY id ASC'
+            }
+            const filters = {
+                'all': '',
+                'read': 'AND read = 1',
+                'notRead':'AND read = 0'
+            }
+
+            if(!order || !filter || !roomId || filters[filter] === undefined || orders[order] === undefined) return res.end();
+
+            const db = await Database();
+
+            const questions = await db.all(`SELECT * FROM questions WHERE room = '${roomId}' ${filters[filter]} ${orders[order]}`);
+
+            res.json({questions});
+
+        } catch (error) {
+            console.log(error);
+            res.json({ success:false, message: 'Ocorreu um erro interno ao filtrar/ordenar =(' });
+        }
     }
 }

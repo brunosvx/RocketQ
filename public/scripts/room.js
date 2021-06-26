@@ -142,4 +142,64 @@ const type = () => {
     spanCounter.innerHTML = `${question.value.length}/500`;
 }
 
-question.addEventListener('input', type)
+question.addEventListener('input', type);
+
+const filterSelect = document.querySelector('#filterSelect');
+const orderSelect = document.querySelector('#orderSelect');
+
+const changeSelect = async () => {
+
+    const { data } = await axios.post('/questions/filter',{
+        order:orderSelect.value,
+        filter:filterSelect.value,
+        roomId:askForm.getAttribute('room-id')
+    })
+
+    divQuestions.innerHTML = '';
+
+    if(data.success === false){
+        return Response('error', data.message);
+    }
+
+    if(!data.questions.length){
+        return divQuestions.innerHTML = `<div class="no-questions">
+        <img src="/images/noquestions.svg" alt="Sem perguntas">
+        <p>Nenhuma pergunta por aqui...</p>
+        <p>Faça sua primeira pergunta e envie o <br>código dessa sala para outras pessoas!</p>
+    </div>`;
+    }
+
+    data.questions.forEach(question => {
+        divQuestions.innerHTML += `<div class="question-wrapper ${question.read ? 'read' : ''}" id="${question.id}">
+        <div class="question-date">
+        <div class="question-hour">
+            ${ new Date(question.data).toLocaleString('pt-BR',{day: '2-digit', month: '2-digit',year: '2-digit' , hour: '2-digit', minute:'2-digit'}).replace(' ',' - ') }
+        </div>
+      </div>
+
+        <div class="question-content">
+            <div class="user">
+                <img src="/images/user.svg" alt="Avatar">
+            </div>
+            <div class="question">
+                <p>${question.title}</p>
+            </div>
+        </div>
+        <div class="actions">
+        ${!question.read ? `<a href="#" class="check" data-id="${question.id}">
+        <img src="/images/check.svg" alt="Marcar como lida">
+        Marcar como lida
+    </a>` :''}
+            <a href="#" class="delete" data-id="${question.id}">
+                <img src="/images/trash.svg" alt="Excluir">
+                Excluir
+            </a>
+        </div>
+    </div>`
+    })
+
+}
+
+
+filterSelect.addEventListener('change', changeSelect);
+orderSelect.addEventListener('change', changeSelect);
