@@ -27,7 +27,7 @@ module.exports = {
 
             }
 
-            res.json({ success: true, questionId });
+            res.json({ success: true, questionId, action });
 
             
         } catch (error) {

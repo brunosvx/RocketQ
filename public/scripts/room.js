@@ -38,9 +38,15 @@ actionForm.onsubmit = async (e) => {
     })
 
     if(data.success){
+        password.value = '';
         document.querySelector('.rkt.button.cancel').click();
+        const questionElement = document.getElementById(data.questionId)
+        if(data.action === 'delete'){
+            return questionElement.remove();
+        }
 
-        return document.getElementById(data.questionId).remove();
+        questionElement.classList.add('read');
+        return questionElement.querySelector('.check').remove();
     }
     
     password.value = '';
