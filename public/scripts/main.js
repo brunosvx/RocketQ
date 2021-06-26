@@ -7,18 +7,19 @@ const modalDescription = document.querySelector('.modal p')
 const modalButton = document.querySelector('.modal button')
 
 
-const checkButtons = document.querySelectorAll(".actions a.check") 
+const addHandleClick = () => {
+    const checkButtons = document.querySelectorAll(".actions a.check") 
+    checkButtons.forEach(button => {
+        button.addEventListener("click", handleClick)
+    })
 
-checkButtons.forEach(button => {
-    button.addEventListener("click", handleClick)
-})
+    const deleteButton = document.querySelectorAll(".actions a.delete")
+    deleteButton.forEach(button => {
+        button.addEventListener("click", (event) => handleClick(event, false))
+    })
+}
 
-
-const deleteButton = document.querySelectorAll(".actions a.delete")
-
-deleteButton.forEach(button => {
-    button.addEventListener("click", (event) => handleClick(event, false))
-})
+addHandleClick();
 
 function handleClick(event, check = true){
     event.preventDefault()
@@ -38,3 +39,6 @@ function handleClick(event, check = true){
 
     modal.open()
 }
+
+
+export default addHandleClick;

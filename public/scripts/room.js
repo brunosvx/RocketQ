@@ -1,3 +1,4 @@
+import handleClick from './main.js';
 import Response from './responseModal.js';
 
 const divQuestions = document.querySelector('#divQuestions');
@@ -49,12 +50,14 @@ const renderQuestions = (questions, questionsRead) => {
         </div>
     </div>`
     })
+    handleClick();
 
 }
 
 
 const askForm = document.querySelector('#askForm');
 const question = document.querySelector('#question');
+const spanCounter = document.querySelector('span.counter');
 
 askForm.onsubmit = async (e) => {
     e.preventDefault();
@@ -69,6 +72,8 @@ askForm.onsubmit = async (e) => {
 
     if(data.success){
         Response('success', data.message);
+        question.value = '';
+        spanCounter.innerHTML = '0/500';
         return renderQuestions(data.questions, data.questionsRead);
     }
 
@@ -108,7 +113,6 @@ actionForm.onsubmit = async (e) => {
     
 }
 
-const spanCounter = document.querySelector('span.counter');
 
 const type = () => {
     if(question.value.length >= 500){
