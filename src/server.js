@@ -16,5 +16,5 @@ app.use(route);
 app.use((req, res) => res.render('index', {page:'erro404', title: 'Erro404'}));
 
 app.listen(process.env.PORT || 3000, () => {
-    console.log("Express server listening on port %d in %s mode", this.address().port, server.settings.env);
+    console.log("RODANDO NA PROTA", process.env.PORT || 3000);
 });
